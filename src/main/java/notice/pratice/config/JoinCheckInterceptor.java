@@ -63,6 +63,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
         boolean accessTokenbool = Objects.isNull(accessUserToken);
         boolean refreshTokenbool = Objects.isNull(refreshUserToken);
 
+
         //accessToken 일 경우
         if (!accessTokenbool) {
             UseYn useYn = accessUserToken.getUseYn();
@@ -75,7 +76,10 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             boolean accessTokenVerify = JwtUtil.verifyJWT(accessToken);
             boolean refreshTokenVerify = JwtUtil.verifyJWT(refreshToken);
 
-            if (accessTokenVerify == false && refreshTokenVerify == true) {
+            //토큰 두개가 만료 되었을때
+            if (!accessTokenVerify && !refreshTokenVerify) {
+                throw new JwtExpiredException("토큰 오류", "-103");
+            }else if (accessTokenVerify == false && refreshTokenVerify == true) {
                 //엑세스 토큰
                 String atoken = JwtUtil.createToken(accessUserToken.getWriterId(), "0.5");
 
@@ -111,6 +115,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             if (accessTokenbool && refreshTokenbool) {
                 throw new JwtExpiredException("토큰 오류", "-103");
             }
+
         }
         return result;
     }

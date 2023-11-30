@@ -26,6 +26,7 @@ public class LoginService {
     private final TokenService tokenService;
     private final TokenRepository tokenRepository;
 
+    @Transactional
    public ResponseEntity<Message> login(LoginForm loginForm, HttpServletRequest request) {
        ResponseEntity<Message> result;
 

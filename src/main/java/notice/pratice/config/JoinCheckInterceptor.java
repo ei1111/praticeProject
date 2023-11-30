@@ -32,7 +32,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
      *  - accessToken과 refreshToken이 만료되면 접근이 불가능 하다는 응답을 보여준다.
      * */
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String jwt = JwtUtil.resolveToken(request);
         //오류 검증

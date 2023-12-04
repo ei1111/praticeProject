@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.PageRequest;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
+import notice.pratice.domain.pageData.PageModel;
 import notice.pratice.entity.Notice;
 import notice.pratice.exception.domainException.NoticeException;
 import notice.pratice.repository.NoticeRepository;
@@ -58,8 +59,8 @@ public class NoticeService {
         return Message.createMessage("공지사항 수정 성공", "1", HttpStatus.OK);
     }
 
-    public Page<Notice> findAllList(Pageable pageRequest, String... orderCondition) {
-        return noticeRepository.searchPageSimple(pageRequest, orderCondition);
+    public Page<Notice> findAllList(Pageable pageRequest, PageModel pageModel) {
+        return noticeRepository.searchPageSimple(pageRequest, pageModel);
     }
     @Transactional
     public ResponseEntity<Message> multiDelete(List<Integer> list) {

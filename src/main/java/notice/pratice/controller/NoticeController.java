@@ -2,23 +2,22 @@ package notice.pratice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import notice.pratice.domain.PageRequest;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
+import notice.pratice.domain.pageData.PageModel;
 import notice.pratice.entity.Notice;
 import notice.pratice.exception.domainException.NoticeException;
 import notice.pratice.service.NoticeService;
-import notice.pratice.utils.CheckType;
-import notice.pratice.utils.methods.CheckOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -83,33 +82,28 @@ public class NoticeController {
         기본값으로는 1page이며 page당 조회건수 10건입니다.
         page당 조회건수는 최대 20건으로 제한해주세요.
     * */
-    @GetMapping("/lists")
-    public Page<NoticeForm> findAllList(
-                                        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
-                                        @RequestParam(value = "size", required = false, defaultValue = "3") int size,
-                                        @RequestParam(value = "titleName", required = false) String titleName,
-                                        @RequestParam(value = "title", required = false) String title,
-                                        @RequestParam(value = "createTime", required = false) String createTime
-    ) {
-/*      for (int i = 1; i <= 26; i++) {
-            String title =  String.valueOf((char) (64 + i));
-            String note = "team" + i;
-            String content = String.valueOf((char) (64 + i));
+        @GetMapping("/lists")
+        public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) {
+     /*       for (int i = 1; i <= 26; i++) {
+                String title = String.valueOf((char) (64 + i));
+                String note = "team" + i;
+                String content = String.valueOf((char) (64 + i));
 
-            noticeService.testPage(title, note, content);
-        }*/
+                noticeService.testPage(title, note, content);
+            }*/
+
         //title과 createTime 검증 코드
-        CheckOrder checkOrder = new CheckOrder();
-        title = checkOrder.checkOrder(title);
-        createTime = checkOrder.checkOrder(createTime);
+        pageModel.setTitle(PageModel.checkOrder(pageModel.getTitle()));
+        pageModel.setCreateTime(PageModel.checkOrder(pageModel.getCreateTime()));
 
         notice.pratice.domain.PageRequest pageRequest = new notice.pratice.domain.PageRequest();
-        pageRequest.setPage(page);
-        pageRequest.setSize(size);
+        pageRequest.setPage(pageModel.getPage());
+        pageRequest.setSize(pageModel.getSize());
         Pageable pageable = pageRequest.of();
         //DTO는 엔티티를 받아도 괜찮다
-        Page<Notice> notices = noticeService.findAllList(pageable, titleName, title, createTime);
+        Page<Notice> notices = noticeService.findAllList(pageable, pageModel);
         return notices.map(notice -> new NoticeForm(notice));
+
     }
 
 }

@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import notice.pratice.domain.OrderByNull;
+import notice.pratice.domain.pageData.PageModel;
 import notice.pratice.entity.Notice;
 import notice.pratice.entity.QNotice;
 import notice.pratice.repository.custom.NoticeRepositoryCustom;
@@ -61,12 +62,12 @@ public class NoticeRepositoryImpl implements NoticeRepositoryCustom {
     }
 
     @Override
-    public Page<Notice> searchPageSimple(Pageable pageable, String...  orderCondition) {
+    public Page<Notice> searchPageSimple(Pageable pageable, PageModel pageModel) {
         QNotice notice = QNotice.notice;
 
-        String titleName = orderCondition[0];
-        String title = orderCondition[1];
-        String createTime = orderCondition[2];
+        String titleName = pageModel.getTitleName();
+        String title = pageModel.getTitle();
+        String createTime = pageModel.getCreateTime();
 
         //컨텐츠
         List<Notice> content = queryFactory

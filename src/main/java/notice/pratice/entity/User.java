@@ -15,13 +15,10 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     //사용자 아이디
-    @Column(columnDefinition = "varchar2(256)")
     private String writerId;
     //사용자 패스워드
-    @Column(columnDefinition = "varchar2(256)")
     private String writerPwd;
     //사용자 이름
-    @Column(columnDefinition = "varchar2(256)")
     private String writerName;
 
 

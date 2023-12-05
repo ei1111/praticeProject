@@ -2,12 +2,7 @@ package notice.pratice.domain.pageData;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Columns;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter
@@ -21,11 +16,10 @@ public class PageModel {
     private String title;
     private String createTime;
 
-
     public static String checkOrder(String str) {
         String result = str;
 
-        if(StringUtils.hasText(result)){
+        if (StringUtils.hasText(result)) {
             if (result.equals("ASC") || result.equals("DESC")) {
                 return result;
             }

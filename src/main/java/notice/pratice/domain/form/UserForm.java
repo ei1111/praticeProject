@@ -4,10 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import notice.pratice.entity.User;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 @Getter
 @Setter
 public class UserForm {

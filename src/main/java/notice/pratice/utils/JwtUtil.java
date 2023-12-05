@@ -5,7 +5,6 @@ import io.jsonwebtoken.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,9 +25,9 @@ public class JwtUtil {
         Map<String, Object> payloads = new HashMap<>();
         payloads.put("data", "My First JWT !!");
 
-        if(CheckType.isDouble(hour)){
+        if (CheckType.isDouble(hour)) {
             double doubleTime = Double.parseDouble(hour);
-            int calculateExTime = (int)(1000 * 60 * 60 * doubleTime);
+            int calculateExTime = (int) (1000 * 60 * 60 * doubleTime);
             Long expiredTime = Long.valueOf(calculateExTime); // 토큰 유효 시간
 
             Date ext = new Date(); // 토큰 만료 시간
@@ -47,19 +46,16 @@ public class JwtUtil {
         return jwt;
     }
 
-    public static Boolean verifyJWT(String jwt)  {
+    public static Boolean verifyJWT(String jwt) {
         try {
             Claims claims = Jwts.parser().setSigningKey(key.getBytes("UTF-8")) // Set
                     // Key
                     .parseClaimsJws(jwt) // 파싱 및 검증, 실패 시 에러
                     .getBody();
-        } catch (ExpiredJwtException e) { // 토큰이 만료되었을 경우
-            return false;
-        }catch (MalformedJwtException e){
-            return false;
-        } catch (UnsupportedEncodingException e) {
+        } catch (ExpiredJwtException | MalformedJwtException | UnsupportedEncodingException e) { // 토큰이 만료되었을 경우
             return false;
         }
+
         return true;
     }
 
@@ -69,12 +65,10 @@ public class JwtUtil {
     }
 
     public static String getUserId(String token) {
-        String userId = Jwts.parser()
+        return Jwts.parser()
                 .setSigningKey(Base64.getEncoder().encodeToString(key.getBytes()))
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-
-        return userId;
     }
 }

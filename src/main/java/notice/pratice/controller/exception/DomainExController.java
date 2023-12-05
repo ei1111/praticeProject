@@ -20,25 +20,25 @@ public class DomainExController {
     }
 
     @ExceptionHandler(value = LoginException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResMessAndCode loginException(LoginException loginException) {
         return new ErrorResMessAndCode(loginException.getMessage(), loginException.getResultCode());
     }
 
     @ExceptionHandler(value = LogoutException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResMessAndCode logoutException(LogoutException logoutException) {
         return new ErrorResMessAndCode(logoutException.getMessage(), logoutException.getResultCode());
     }
 
     @ExceptionHandler(value = UserException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResMessAndCode userException(UserException userException) {
         return new ErrorResMessAndCode(userException.getMessage(), userException.getResultCode());
     }
 
     @ExceptionHandler(value = JwtExpiredException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResMessAndCode jwtExpiredException(JwtExpiredException jwtExpiredException) {
         return new ErrorResMessAndCode(jwtExpiredException.getMessage(), jwtExpiredException.getResultCode());
     }

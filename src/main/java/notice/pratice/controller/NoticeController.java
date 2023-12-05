@@ -31,7 +31,6 @@ public class NoticeController {
      * */
     @PostMapping("/save")
     public ResponseEntity<Message> save(@RequestBody @Valid NoticeForm form, BindingResult result) {
-        ResponseEntity<Message> resultResponse;
         if (result.hasErrors()) {
             throw new NoticeException(result.getFieldError().getDefaultMessage(), "-201");
         }
@@ -43,7 +42,7 @@ public class NoticeController {
      * 공지사항 단건 조회
      * */
     @GetMapping("/content/{id}")
-    public Map selectContent(@PathVariable("id") Integer id) {
+    public Map<String, String> selectContent(@PathVariable("id") Integer id) {
         return noticeService.findContent(id);
     }
 
@@ -60,7 +59,7 @@ public class NoticeController {
      * */
     @GetMapping("/delete/{id}")
     public ResponseEntity<Message> delete(@PathVariable Integer id) {
-       return noticeService.delete(id);
+        return noticeService.delete(id);
     }
 
 
@@ -68,7 +67,7 @@ public class NoticeController {
     @PostMapping("/multiDelete")
     public ResponseEntity<Message> multiDelete(@RequestBody Map<String, List<Integer>> multiMap) {
         List<Integer> list = new ArrayList(multiMap.get("multipleList"));
-       return noticeService.multiDelete(list);
+        return noticeService.multiDelete(list);
     }
 
     /*
@@ -82,13 +81,13 @@ public class NoticeController {
         기본값으로는 1page이며 page당 조회건수 10건입니다.
         page당 조회건수는 최대 20건으로 제한해주세요.
     * */
-        @GetMapping("/lists")
-        public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) {
-     /*       for (int i = 1; i <= 26; i++) {
+    @GetMapping("/lists")
+    public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) throws InterruptedException {
+         /*  for (int i = 1; i <= 26; i++) {
                 String title = String.valueOf((char) (64 + i));
                 String note = "team" + i;
                 String content = String.valueOf((char) (64 + i));
-
+                Thread.sleep(1000);
                 noticeService.testPage(title, note, content);
             }*/
 
@@ -102,7 +101,7 @@ public class NoticeController {
         Pageable pageable = pageRequest.of();
         //DTO는 엔티티를 받아도 괜찮다
         Page<Notice> notices = noticeService.findAllList(pageable, pageModel);
-        return notices.map(notice -> new NoticeForm(notice));
+        return notices.map(NoticeForm::new);
 
     }
 

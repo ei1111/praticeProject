@@ -1,7 +1,5 @@
 package notice.pratice.repository.impl;
 
-import com.google.common.collect.Lists;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -14,17 +12,14 @@ import notice.pratice.entity.Notice;
 import notice.pratice.entity.QNotice;
 import notice.pratice.repository.custom.NoticeRepositoryCustom;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static notice.pratice.entity.QNotice.*;
 import static notice.pratice.entity.QNotice.notice;
 
 @Slf4j

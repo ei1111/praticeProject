@@ -5,7 +5,6 @@ import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.UserForm;
 import notice.pratice.entity.User;
 import notice.pratice.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +18,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/save")
-    public ResponseEntity<Message> createUser(@RequestBody UserForm userForm){
-        return  userService.save(userForm);
+    public ResponseEntity<Message> createUser(@RequestBody UserForm userForm) {
+        return userService.save(userForm);
     }
 
     @GetMapping
     public List<UserForm> selectAllUsers() {
         List<User> users = userService.selectAllUsers();
-        return users.stream().map(user -> new UserForm(user)).collect(Collectors.toList());
+        return users.stream().map(UserForm::new).collect(Collectors.toList());
     }
 }

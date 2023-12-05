@@ -1,7 +1,6 @@
 package notice.pratice.service;
 
 import lombok.RequiredArgsConstructor;
-import notice.pratice.domain.PageRequest;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
 import notice.pratice.domain.pageData.PageModel;
@@ -46,7 +45,7 @@ public class NoticeService {
     @Transactional
     public ResponseEntity<Message> delete(Integer id) {
         noticeRepository.deleteById(id);
-        return Message.createMessage("공지사항 삭제 성공", "1", HttpStatus.OK);
+        return Message.createMessage("공지사항 삭제 성공", "1", HttpStatus.NO_CONTENT);
     }
 
     @Transactional
@@ -56,7 +55,7 @@ public class NoticeService {
         notice.setContent(form.getContent());
         notice.setNote(form.getNote());
 
-        return Message.createMessage("공지사항 수정 성공", "1", HttpStatus.OK);
+        return Message.createMessage("공지사항 수정 성공", "1", HttpStatus.CREATED);
     }
 
     public Page<Notice> findAllList(Pageable pageRequest, PageModel pageModel) {
@@ -68,7 +67,7 @@ public class NoticeService {
             noticeRepository.deleteById(id);
         }
 
-        return Message.createMessage("공지사항 삭제 성공", "1", HttpStatus.OK);
+        return Message.createMessage("공지사항 삭제 성공", "1", HttpStatus.NO_CONTENT);
     }
 
     /* 데이터 넣어 주는 코드*/

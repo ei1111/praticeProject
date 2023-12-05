@@ -1,16 +1,15 @@
 package notice.pratice.entity.baseEntity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -23,4 +22,19 @@ public class BaseTimeEntity {
     //수정시간
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    @PrePersist
+    public void onPrePersist() {
+        String customLocalDateTimeFormat = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime parsedCreateDate = LocalDateTime.parse(customLocalDateTimeFormat, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.createAt = parsedCreateDate;
+        this.modifiedAt = parsedCreateDate;
+    }
+
+    @PreUpdate
+    public void onPreUpdate(){
+        String customLocalDateTimeFormat = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime parsedCreateDate = LocalDateTime.parse(customLocalDateTimeFormat, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.modifiedAt = parsedCreateDate;
+    }
 }

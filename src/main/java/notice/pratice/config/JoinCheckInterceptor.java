@@ -37,24 +37,24 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
         String jwt = JwtUtil.resolveToken(request);
         //오류 검증
         //jwt 없이 접근시
-        if(!StringUtils.hasText(jwt)){
+        if (!StringUtils.hasText(jwt)) {
             throw new JwtExpiredException("토큰 없이 접근이 불가능합니다", "-103");
         }
 
-        return tokenCheck(jwt , request , response);
+        return tokenCheck(jwt, request, response);
     }
 
     /*
-    * accessToken인지 refreshToken 구별하기
-    * 1.aceessToken인지 refreshToken인지 조회
-    *
-    * accessToken
-    *   -accessToken 만료되었고 refreshToken 만료되지 않았다면 재발행
-    *
-    * refreshToken일때
-    *  -refreshToken일때 만료되었으면 redirect 처리
-    * */
-    public Boolean tokenCheck(String jwt, HttpServletRequest request , HttpServletResponse response) throws ServletException, IOException {
+     * accessToken인지 refreshToken 구별하기
+     * 1.aceessToken인지 refreshToken인지 조회
+     *
+     * accessToken
+     *   -accessToken 만료되었고 refreshToken 만료되지 않았다면 재발행
+     *
+     * refreshToken일때
+     *  -refreshToken일때 만료되었으면 redirect 처리
+     * */
+    public Boolean tokenCheck(String jwt, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Boolean result = true;
 
         UserToken accessUserToken = tokenRepository.findByAccessToken(jwt);
@@ -64,10 +64,10 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
         boolean refreshTokenbool = Objects.isNull(refreshUserToken);
 
 
-        //accessToken 일 경우
+        //accessToken일 경우
         if (!accessTokenbool) {
             UseYn useYn = accessUserToken.getUseYn();
-
+            //로그아웃 체크
             checkLogout(useYn);
 
             String accessToken = accessUserToken.getAccessToken();
@@ -79,12 +79,13 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             //토큰 두개가 만료 되었을때
             if (!accessTokenVerify && !refreshTokenVerify) {
                 throw new JwtExpiredException("토큰 오류", "-103");
-            }else if (accessTokenVerify == false && refreshTokenVerify == true) {
+                //accessToken은 만료되고 refreshToken은 만료되지 않았을 경우
+            } else if (accessTokenVerify == false && refreshTokenVerify == true) {
                 //엑세스 토큰
                 String atoken = JwtUtil.createToken(accessUserToken.getWriterId(), "0.5");
 
                 //리프레시 토큰
-                String rtoken = JwtUtil.createToken(accessUserToken.getWriterId(),"2");
+                String rtoken = JwtUtil.createToken(accessUserToken.getWriterId(), "2");
 
                 //사용자 환경
                 String userAgent = request.getHeader("user-agent");
@@ -99,19 +100,20 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
 
                 request.setAttribute("userId", userId);
             }
+            //refreshToken일 경우
         } else if (!refreshTokenbool) {
             UseYn useYn = refreshUserToken.getUseYn();
 
             String refreshToken = refreshUserToken.getRefreshToken();
             Boolean refreshTokenBool = JwtUtil.verifyJWT(refreshToken);
-
+            //로그아웃 체크
             checkLogout(useYn);
-
+            //refreshToken이 만료되었을 경우
             if (!refreshTokenBool) {
                 throw new JwtExpiredException("토큰 오류", "-103");
             }
-        }else{
-            //데이터가 둘 다 없을 경우 이상한 토큰
+        } else {
+            //조회시 데이터가 둘 다 없을 경우 이상한 토큰
             if (accessTokenbool && refreshTokenbool) {
                 throw new JwtExpiredException("토큰 오류", "-103");
             }
@@ -122,7 +124,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
 
     private static void checkLogout(UseYn useYn) {
         if (useYn == UseYn.N) {
-            throw new LogoutException("로그아웃 되었습니다. 다시 로그인 해주세요", "500");
+            throw new LogoutException("로그아웃 되었습니다. 다시 로그인 해주세요", "404");
         }
     }
 }

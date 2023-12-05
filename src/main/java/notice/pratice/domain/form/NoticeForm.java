@@ -1,7 +1,6 @@
 package notice.pratice.domain.form;
 
 import lombok.Getter;
-import lombok.Setter;
 import notice.pratice.entity.Notice;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +15,7 @@ public class NoticeForm {
     private String content;
     private String note;
     private LocalDateTime createAt;
+
     public NoticeForm() {
     }
 

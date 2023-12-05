@@ -15,9 +15,9 @@ public class Message {
     private String resultCode;
     private String message;
 
-    public static ResponseEntity<Message> createMessage(String resultMessage,String resultCode , HttpStatus status) {
+    public static ResponseEntity<Message> createMessage(String resultMessage, String resultCode, HttpStatus status) {
         Message message = new Message();
-        HttpHeaders headers= new HttpHeaders();
+        HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
         message.setResultCode(resultCode);

@@ -41,7 +41,7 @@ public class LoginService {
            tokenService.saveToken(user, request);
            result = Message.createMessage("로그인 완료", "1", HttpStatus.OK);
        }else{
-           throw new LoginException("존재하지 않는 아이디 입니다", "500");
+           throw new LoginException("존재하지 않는 아이디 입니다", "404");
        }
        return result;
     }

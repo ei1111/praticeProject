@@ -1,7 +1,6 @@
 package notice.pratice.entity;
 
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Default;
 import notice.pratice.domain.UseYn;
 import notice.pratice.entity.baseEntity.BaseTimeEntity;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,8 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserToken extends BaseTimeEntity {
     //토큰 아이디
     @Id

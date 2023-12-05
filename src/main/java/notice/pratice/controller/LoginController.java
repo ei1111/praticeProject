@@ -1,6 +1,5 @@
 package notice.pratice.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.LoginForm;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LoginController {
     private final LoginService loginService;
 
-   @PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Message> login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
         return loginService.login(loginForm, request);
     }

@@ -1,6 +1,7 @@
 package notice.pratice;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import notice.pratice.config.WebConfig;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,12 +38,7 @@ public class PraticeApplication {
 			}
 
 			private Boolean checkUrI(HttpServletRequest request) {
-				String requestURI = request.getRequestURI();
-				List<String> urlList = new ArrayList<>();
-				urlList.add("/users/save");
-				urlList.add("/auths/login");
-
-				return !urlList.contains(requestURI) ? true : false;
+				return !WebConfig.excludeArr.contains(request.getRequestURI()) ? true : false;
 			}
 		};
 	}

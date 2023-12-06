@@ -73,7 +73,7 @@ public class NoticeController {
 
     /*
     * 공지사항 리스트를 조회
-        검색어로 제목을 사용하여, 제목의 일부분이 포함된 결과를 조회할 수 있습니다.
+        검색어로 제목을 사용하여, 제목의 ㅌ일부분이 포함된 결과를 조회할 수 있습니다.
         검색어가 없으면 전체 리스트를 조회하면 됩니다.
         기본 정렬조건은 생성시각(createAt)으로 내림차순으로 정렬합니다.(최신순으로 정렬)
         정렬조건에 따라 제목순, 생성시각 순으로 정렬할 수 있습니다.
@@ -84,14 +84,14 @@ public class NoticeController {
     * */
     @GetMapping("/lists")
     public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) throws InterruptedException {
-     /*      for (int i = 1; i <= 26; i++) {
+        /*  for (int i = 1; i <= 26; i++) {
                 String title = String.valueOf((char) (64 + i));
                 String note = "team" + i;
                 String content = String.valueOf((char) (64 + i));
                 Thread.sleep(1000);
                 noticeService.testPage(title, note, content);
-            }*/
-
+            }
+        */
         //title과 createTime 검증 코드
         pageModel.setTitle(PageModel.checkOrder(pageModel.getTitle()));
         pageModel.setCreateTime(PageModel.checkOrder(pageModel.getCreateTime()));

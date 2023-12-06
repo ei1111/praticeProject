@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(customInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/save", "/auth/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf");
+                .excludePathPatterns("/users/save", "/auths/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf");
     }
 
     @Bean

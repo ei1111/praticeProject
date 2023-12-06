@@ -39,8 +39,8 @@ public class PraticeApplication {
 			private Boolean checkUrI(HttpServletRequest request) {
 				String requestURI = request.getRequestURI();
 				List<String> urlList = new ArrayList<>();
-				urlList.add("/user/save");
-				urlList.add("/auth/login");
+				urlList.add("/users/save");
+				urlList.add("/auths/login");
 
 				return !urlList.contains(requestURI) ? true : false;
 			}

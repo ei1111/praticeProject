@@ -13,14 +13,16 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
-    @PostMapping("/users")
+
+    @PostMapping("/save")
     public ResponseEntity<Message> createUser(@RequestBody UserForm userForm) {
         return userService.save(userForm);
     }
 
-    @GetMapping("/users")
+    @GetMapping
     public List<UserForm> selectAllUsers() {
         List<User> users = userService.selectAllUsers();
         return users.stream().map(UserForm::new).collect(Collectors.toList());

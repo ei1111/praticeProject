@@ -84,7 +84,7 @@ public class NoticeController {
     * */
     @GetMapping("/lists")
     public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) throws InterruptedException {
-         /*  for (int i = 1; i <= 26; i++) {
+     /*      for (int i = 1; i <= 26; i++) {
                 String title = String.valueOf((char) (64 + i));
                 String note = "team" + i;
                 String content = String.valueOf((char) (64 + i));

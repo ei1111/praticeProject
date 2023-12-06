@@ -22,7 +22,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/notice")
+@RequestMapping("/notices")
 public class NoticeController {
     private final NoticeService noticeService;
 
@@ -41,7 +41,7 @@ public class NoticeController {
     /*
      * 공지사항 단건 조회
      * */
-    @GetMapping("/content/{id}")
+    @GetMapping("/contents/{id}")
     public Map<String, String> selectContent(@PathVariable("id") Integer id) {
         return noticeService.findContent(id);
     }
@@ -49,7 +49,7 @@ public class NoticeController {
     /*
      * 공지사항 수정
      * */
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Message> update(@RequestBody NoticeForm form) {
         return noticeService.update(form);
     }
@@ -57,14 +57,14 @@ public class NoticeController {
     /*
      * 공지사항 삭제
      * */
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Message> delete(@PathVariable Integer id) {
         return noticeService.delete(id);
     }
 
 
     /*공지 사항 다중 삭제*/
-    @PostMapping("/multiDelete")
+    @DeleteMapping("/multiDelete")
     public ResponseEntity<Message> multiDelete(@RequestBody Map<String, List<Integer>> multiMap) {
         List<Integer> list = new ArrayList(multiMap.get("multipleList"));
         return noticeService.multiDelete(list);

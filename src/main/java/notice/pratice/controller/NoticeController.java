@@ -2,6 +2,7 @@ package notice.pratice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import notice.pratice.domain.PageRequest;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
 import notice.pratice.domain.pageData.PageModel;
@@ -95,7 +96,7 @@ public class NoticeController {
         pageModel.setTitle(PageModel.checkOrder(pageModel.getTitle()));
         pageModel.setCreateTime(PageModel.checkOrder(pageModel.getCreateTime()));
 
-        notice.pratice.domain.PageRequest pageRequest = new notice.pratice.domain.PageRequest();
+        PageRequest pageRequest = new PageRequest();
         pageRequest.setPage(pageModel.getPage());
         pageRequest.setSize(pageModel.getSize());
         Pageable pageable = pageRequest.of();
@@ -104,6 +105,5 @@ public class NoticeController {
         return notices.map(NoticeForm::new);
 
     }
-
 }
 

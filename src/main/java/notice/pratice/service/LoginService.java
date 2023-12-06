@@ -27,23 +27,23 @@ public class LoginService {
     private final TokenRepository tokenRepository;
 
     @Transactional
-   public ResponseEntity<Message> login(LoginForm loginForm, HttpServletRequest request) {
-       ResponseEntity<Message> result;
+    public ResponseEntity<Message> login(LoginForm loginForm, HttpServletRequest request) {
+        ResponseEntity<Message> result;
 
-       //전달되는 데이터 암호화
-       String id = AesClass.encrypt(loginForm.getWriterId());
-       String pwd = AesClass.encrypt(loginForm.getWriterPwd());
+        //전달되는 데이터 암호화
+        String id = AesClass.encrypt(loginForm.getWriterId());
+        String pwd = AesClass.encrypt(loginForm.getWriterPwd());
 
-       //회원가입 여부 확인
+        //회원가입 여부 확인
         User user = userRepository.selectUserCheck(id, pwd);
 
-       if (!Objects.isNull(user)) {
-           tokenService.saveToken(user, request);
-           result = Message.createMessage("로그인 완료", "1", HttpStatus.OK);
-       }else{
-           throw new LoginException("존재하지 않는 아이디 입니다", "404");
-       }
-       return result;
+        if (!Objects.isNull(user)) {
+            tokenService.saveToken(user, request);
+            result = Message.createMessage("로그인 완료", "1", HttpStatus.OK);
+        } else {
+            throw new LoginException("존재하지 않는 아이디 입니다", "404");
+        }
+        return result;
     }
 
     @Transactional

@@ -17,16 +17,12 @@ public class PageModel {
     private String createTime;
 
     public static String checkOrder(String str) {
-        String result = str;
-
-        if (StringUtils.hasText(result)) {
-            if (result.equals("ASC") || result.equals("DESC")) {
-                return result;
+        if (StringUtils.hasText(str)) {
+            if (str.equals("ASC") || str.equals("DESC")) {
+                return str;
             }
-
-            return (result.equals("asc") || result.equals("desc")) ? result.toUpperCase() : null;
+            return (str.equals("asc") || str.equals("desc")) ? str.toUpperCase() : new String();
         }
-
-        return result;
+        return new String();
     }
 }

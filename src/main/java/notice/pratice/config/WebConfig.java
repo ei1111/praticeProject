@@ -12,8 +12,8 @@ import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    public static String[] strArr = {"/users/save", "/auths/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf"};
-    public static List<String> excludeArr = new ArrayList<>(Arrays.asList(strArr));
+    private static final String[] strArr = {"/users/save", "/auths/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf"};
+    public static final List<String> excludeArr = new ArrayList<>(Arrays.asList(strArr));
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(customInterceptor())

@@ -7,6 +7,8 @@ ___
 ### h2 Database
 ___
 ## 로직
+회원 가입 기능, 로그인, 게시만 조회 기능
+<br>
 AccessToken 30분 RefreshToken 2시간
 <br>
 AccessToken 만료 후 Refresh Token이 만료되지 않았다면 AccessToken 재발급 및 Refresh Token 재발급

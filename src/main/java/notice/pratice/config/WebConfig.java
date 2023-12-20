@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    private static final String[] strArr = {"/users/save", "/auths/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf"};
+    private static final String[] strArr = {"/users/save", "/auths/login", "/error", "/swagger-resources/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/", "/csrf", "/favicon.ico"};
     public static final List<String> excludeArr = new ArrayList<>(Arrays.asList(strArr));
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

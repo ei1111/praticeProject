@@ -80,7 +80,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             if (!accessTokenVerify && !refreshTokenVerify) {
                 throw new JwtExpiredException("토큰 오류", "-103");
                 //accessToken은 만료되고 refreshToken은 만료되지 않았을 경우
-            } else if (accessTokenVerify == false && refreshTokenVerify == true) {
+            } else if (accessTokenVerify == false && refreshTokenVerify) {
                 //엑세스 토큰
                 String atoken = JwtUtil.createToken(accessUserToken.getWriterId(), "0.5");
 
@@ -119,7 +119,7 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             }
 
         }
-        return result;
+        return true;
     }
 
     private static void checkLogout(UseYn useYn) {

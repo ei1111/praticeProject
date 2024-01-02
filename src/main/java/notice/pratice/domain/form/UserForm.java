@@ -1,5 +1,6 @@
 package notice.pratice.domain.form;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import notice.pratice.entity.User;
@@ -8,6 +9,7 @@ import notice.pratice.entity.User;
 @Setter
 public class UserForm {
     //userId
+    @ApiModelProperty(hidden = true)
     private Integer id;
     //사용자 아이디
     private String writerId;

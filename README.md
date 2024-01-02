@@ -7,8 +7,8 @@ ___
 ### h2 Database
 ___
 ## 로직
-swagger로 테스트 할 수 있습니다.
-http://localhost:8080/swagger-ui.html
+swagger로 테스트 할 수 있습니다.<br>
+주소: http://localhost:8080/swagger-ui.html
 
 회원 가입 기능, 로그인, 게시만 조회 기능
 <br>

@@ -25,7 +25,7 @@ public class TokenService {
     * 1. 로그인이 처음이라면 바로 토큰 저장
     * 2. 로그인 기록이 있다면 기존 데이터에 저장
     * */
-    public void saveToken(User user, HttpServletRequest request) {
+    public String saveToken(User user, HttpServletRequest request) {
         //복호화 id
         String id = AesClass.decrypt(user.getWriterId());
 
@@ -58,5 +58,6 @@ public class TokenService {
             userToken.setUseYn(UseYn.Y);
             userToken.setUserAgent(userAgent);
         }
+        return refreshToken;
     }
 }

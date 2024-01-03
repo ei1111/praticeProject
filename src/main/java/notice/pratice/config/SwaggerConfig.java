@@ -1,8 +1,13 @@
 package notice.pratice.config;
 
 import io.swagger.annotations.SecurityDefinition;
+import notice.pratice.domain.dataResult.Message;
+import notice.pratice.domain.dataResult.MessageToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -23,8 +28,7 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig extends WebMvcConfigurerAdapter {
-
+public class SwaggerConfig {
     @Bean
     public Docket restAPI() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -34,6 +38,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
+                .ignoredParameterTypes( MessageToken.class,Page.class, Pageable.class, Sort.class)
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()));
     }
@@ -48,7 +53,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
     }
-    @Override
+ /*   @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
@@ -56,7 +61,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
-
+*/
     private SecurityContext securityContext() {
         return springfox
                 .documentation

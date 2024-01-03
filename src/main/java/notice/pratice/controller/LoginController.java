@@ -1,16 +1,18 @@
 package notice.pratice.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
+import notice.pratice.domain.dataResult.MessageToken;
 import notice.pratice.domain.form.LoginForm;
+import notice.pratice.exception.domainException.UserException;
 import notice.pratice.service.LoginService;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +23,11 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation(value = "로그인 기능" , notes = "DB에 등록된 ID는 로그인 할 수 있습니다.")
-    public ResponseEntity<Message> login(@RequestBody LoginForm loginForm, HttpServletRequest request) {
+    @ApiResponses({@ApiResponse(code=200,message="조회완료"),@ApiResponse(code=-101,message="가입 폼 누락"),@ApiResponse(code=-103,message="토큰에러") ,@ApiResponse(code=500,message="서버문제발생")})
+    public ResponseEntity<MessageToken> login(@RequestBody @Valid  @ApiParam(value="writerId: 사용자 아이디\n" + "writerPwd: 사용자 패스워드" ,required=true) LoginForm loginForm, BindingResult result, HttpServletRequest request) {
+        if (result.hasErrors()) {
+            throw new UserException(result.getFieldError().getDefaultMessage(), "-101");
+        }
         return loginService.login(loginForm, request);
     }
 

@@ -1,8 +1,6 @@
 package notice.pratice.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import notice.pratice.domain.PageRequest;
@@ -17,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -36,7 +35,8 @@ public class NoticeController {
      * */
     @PostMapping("/save")
     @ApiOperation(value = "공지사항 등록" , notes = "토큰 확인 후 공지사항을 등록 할 수 있습니다.")
-    public ResponseEntity<Message> save(@RequestBody @Valid NoticeForm form, BindingResult result) {
+    @ApiResponses({@ApiResponse(code=200,message="저장완료"),@ApiResponse(code=-201,message="저장 폼 누락"),@ApiResponse(code=-103,message="토큰에러") ,@ApiResponse(code=500,message="서버문제발생")})
+    public ResponseEntity<Message> save(@RequestBody @Valid @ApiParam(value="title: 제목\n" + "content: 내용\n" + "note: 비고" ,required=true)  NoticeForm form, BindingResult result) {
         if (result.hasErrors()) {
             throw new NoticeException(result.getFieldError().getDefaultMessage(), "-201");
         }
@@ -48,7 +48,11 @@ public class NoticeController {
      * 공지사항 단건 조회
      * */
     @GetMapping("/contents/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "공지사항 키", required = true,  dataType = "string")
+    })
     @ApiOperation(value = "공지사항 단건 조회" , notes = "토큰 확인 후 공지사항 내용을 확인 할 수 있습니다.")
+    @ApiResponses({@ApiResponse(code=200,message="조회완료"),@ApiResponse(code=-103,message="토큰에러") ,@ApiResponse(code=500,message="서버문제발생")})
     public Map<String, String> selectContent(@PathVariable("id") Integer id) {
         return noticeService.findContent(id);
     }
@@ -58,7 +62,7 @@ public class NoticeController {
      * */
     @PutMapping("/update")
     @ApiOperation(value = "공지사항 단건 수정" , notes = "토큰 확인 후 공지사항 내용을 수정 할 수 있습니다.")
-    public ResponseEntity<Message> update(@RequestBody @ApiParam(value="수정 할 회원 정보",required=true) NoticeForm form) {
+    public ResponseEntity<Message> update(@RequestBody @ApiParam(value="수정 할 공지사항",required=true)NoticeForm form) {
         return noticeService.update(form);
     }
 
@@ -66,6 +70,9 @@ public class NoticeController {
      * 공지사항 삭제
      * */
     @DeleteMapping("/delete/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "공지사항 키", required = true,  dataType = "string"),
+    })
     @ApiOperation(value = "공지사항 단건 삭제" , notes = "토큰 확인 후 공지사항 단건을 삭제 할 수 있습니다.")
     public ResponseEntity<Message> delete(@PathVariable Integer id) {
         return noticeService.delete(id);
@@ -75,7 +82,7 @@ public class NoticeController {
     /*공지 사항 다중 삭제*/
     @DeleteMapping("/multiDelete")
     @ApiOperation(value = "공지사항 다중 삭제" , notes = "토큰 확인 후 공지사항을 다중으로 삭제 할 수 있습니다.")
-    public ResponseEntity<Message> multiDelete(@RequestBody Map<String, List<Integer>> multiMap) {
+    public ResponseEntity<Message> multiDelete(@RequestBody  Map<String, List<Integer>> multiMap) {
         List<Integer> list = new ArrayList(multiMap.get("multipleList"));
         return noticeService.multiDelete(list);
     }
@@ -96,7 +103,7 @@ public class NoticeController {
                                                                +"page당 조회건수는 최대 20건으로 제한합니다.\n"
                                                                 + "기본 정렬조건은 생성시각(createAt)으로 내림차순으로 정렬합니다.\n"
                                                                 + "정렬조건에 따라 제목순, 생성시각 순으로 정렬할 수 있습니다.\n"
-                                                                + "titleName에 ASC 또는 DESC 입력, title에 제목 입력, createTime에 ASC 또는 DESC 입력")
+                                                                + "titleName에 ASC 또는 DESC 입력, title에 제목 입력, createTime에 ASC 또는 DESC 입력"  )
     public Page<NoticeForm> findAllList(@ModelAttribute PageModel pageModel) throws InterruptedException {
         /*  for (int i = 1; i <= 26; i++) {
                 String title = String.valueOf((char) (64 + i));

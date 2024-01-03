@@ -38,7 +38,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
-                .ignoredParameterTypes( MessageToken.class,Page.class, Pageable.class, Sort.class)
+                .ignoredParameterTypes(Page.class, Pageable.class, Sort.class)
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()));
     }

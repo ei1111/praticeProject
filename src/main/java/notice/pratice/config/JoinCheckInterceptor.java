@@ -55,17 +55,15 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
      *  -refreshToken일때 만료되었으면 redirect 처리
      * */
     public Boolean tokenCheck(String jwt, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Boolean result = true;
-
         UserToken accessUserToken = tokenRepository.findByAccessToken(jwt);
         UserToken refreshUserToken = tokenRepository.findByRefreshToken(jwt);
 
-        boolean accessTokenbool = Objects.isNull(accessUserToken);
-        boolean refreshTokenbool = Objects.isNull(refreshUserToken);
+        boolean accessTokenbool = Objects.nonNull(accessUserToken);
+        boolean refreshTokenbool = Objects.nonNull(refreshUserToken);
 
 
         //accessToken일 경우
-        if (!accessTokenbool) {
+        if (accessTokenbool) {
             UseYn useYn = accessUserToken.getUseYn();
             //로그아웃 체크
             checkLogout(useYn);
@@ -77,39 +75,23 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
             boolean refreshTokenVerify = JwtUtil.verifyJWT(refreshToken);
 
             //토큰 두개가 만료 되었을때
-            if (!accessTokenVerify && !refreshTokenVerify) {
+            if (accessTokenVerify && refreshTokenVerify) {
                 throw new JwtExpiredException("토큰 오류", "-103");
                 //accessToken은 만료되고 refreshToken은 만료되지 않았을 경우
-            } else if (accessTokenVerify == false && refreshTokenVerify) {
-                //엑세스 토큰
-                String atoken = JwtUtil.createToken(accessUserToken.getWriterId(), "0.5");
-
-                //리프레시 토큰
-                String rtoken = JwtUtil.createToken(accessUserToken.getWriterId(), "2");
-
-                //사용자 환경
-                String userAgent = request.getHeader("user-agent");
-
-                //사용자 id
-                String userId = JwtUtil.getUserId(refreshToken);
-
-                //사용자 유저 정보
-                accessUserToken.setAccessToken(atoken);
-                accessUserToken.setRefreshToken(rtoken);
-                accessUserToken.setUserAgent(userAgent);
-
-                request.setAttribute("userId", userId);
+            } else if (accessTokenVerify && refreshTokenVerify  == false) {
+                //accessToken과 refreshToken 시간 연장
+                extensionTokenTime(request, accessUserToken, refreshToken);
             }
             //refreshToken일 경우
-        } else if (!refreshTokenbool) {
+        } else if (refreshTokenbool) {
             UseYn useYn = refreshUserToken.getUseYn();
 
             String refreshToken = refreshUserToken.getRefreshToken();
             Boolean refreshTokenBool = JwtUtil.verifyJWT(refreshToken);
             //로그아웃 체크
             checkLogout(useYn);
-            //refreshToken이 만료되었을 경우
-            if (!refreshTokenBool) {
+            //refreshToken이 만료되었을 경우 true
+            if (refreshTokenBool) {
                 throw new JwtExpiredException("토큰 오류", "-103");
             }
         } else {
@@ -120,6 +102,27 @@ public class JoinCheckInterceptor implements HandlerInterceptor {
 
         }
         return true;
+    }
+
+    private static void extensionTokenTime(HttpServletRequest request, UserToken accessUserToken, String refreshToken) {
+        //엑세스 토큰
+        String atoken = JwtUtil.createToken(accessUserToken.getWriterId(), "0.5");
+
+        //리프레시 토큰
+        String rtoken = JwtUtil.createToken(accessUserToken.getWriterId(), "2");
+
+        //사용자 환경
+        String userAgent = request.getHeader("user-agent");
+
+        //사용자 id
+        String userId = JwtUtil.getUserId(refreshToken);
+
+        //사용자 유저 정보
+        accessUserToken.setAccessToken(atoken);
+        accessUserToken.setRefreshToken(rtoken);
+        accessUserToken.setUserAgent(userAgent);
+
+        request.setAttribute("userId", userId);
     }
 
     private static void checkLogout(UseYn useYn) {

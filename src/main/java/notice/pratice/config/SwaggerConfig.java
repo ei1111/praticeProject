@@ -1,16 +1,10 @@
 package notice.pratice.config;
 
-import io.swagger.annotations.SecurityDefinition;
-import notice.pratice.domain.dataResult.Message;
-import notice.pratice.domain.dataResult.MessageToken;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -53,15 +47,7 @@ public class SwaggerConfig {
     private ApiKey apiKey() {
         return new ApiKey("JWT", "Authorization", "header");
     }
- /*   @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
 
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-*/
     private SecurityContext securityContext() {
         return springfox
                 .documentation

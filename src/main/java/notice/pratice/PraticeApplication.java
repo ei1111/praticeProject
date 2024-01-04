@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @EnableJpaAuditing
 @SpringBootApplication
-
 public class PraticeApplication {
 
 	public static void main(String[] args) {

@@ -53,10 +53,10 @@ public class JwtUtil {
                     .parseClaimsJws(jwt) // 파싱 및 검증, 실패 시 에러
                     .getBody();
         } catch (ExpiredJwtException | MalformedJwtException | UnsupportedEncodingException e) { // 토큰이 만료되었을 경우
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"

@@ -7,7 +7,7 @@ import notice.pratice.domain.dataResult.MessageToken;
 import notice.pratice.domain.form.LoginForm;
 import notice.pratice.entity.User;
 import notice.pratice.entity.UserToken;
-import notice.pratice.exception.domainException.LoginException;
+import notice.pratice.global.error.exception.domainException.LoginException;
 import notice.pratice.repository.TokenRepository;
 import notice.pratice.repository.UserRepository;
 import notice.pratice.utils.AesClass;

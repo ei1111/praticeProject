@@ -5,7 +5,7 @@ import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
 import notice.pratice.domain.pageData.PageModel;
 import notice.pratice.entity.Notice;
-import notice.pratice.exception.domainException.NoticeException;
+import notice.pratice.global.error.exception.domainException.NoticeException;
 import notice.pratice.repository.NoticeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

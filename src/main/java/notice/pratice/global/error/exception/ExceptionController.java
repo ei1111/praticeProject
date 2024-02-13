@@ -1,16 +1,14 @@
-package notice.pratice.controller.exception;
+package notice.pratice.global.error.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import notice.pratice.domain.dataResult.ErrorResMessAndCode;
-import notice.pratice.exception.checkedException.DecodingException;
-import notice.pratice.exception.checkedException.EncodingException;
-import notice.pratice.exception.checkedException.UnsupportedEncodingException;
-import org.springframework.http.HttpRequest;
+import notice.pratice.global.error.exception.checkedException.DecodingException;
+import notice.pratice.global.error.exception.checkedException.EncodingException;
+import notice.pratice.global.error.exception.checkedException.UnsupportedEncodingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 

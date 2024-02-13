@@ -1,8 +1,8 @@
 package notice.pratice.utils;
 
-import notice.pratice.exception.checkedException.DecodingException;
-import notice.pratice.exception.checkedException.EncodingException;
-import notice.pratice.exception.checkedException.UnsupportedEncodingException;
+import notice.pratice.global.error.exception.checkedException.DecodingException;
+import notice.pratice.global.error.exception.checkedException.EncodingException;
+import notice.pratice.global.error.exception.checkedException.UnsupportedEncodingException;
 import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Cipher;

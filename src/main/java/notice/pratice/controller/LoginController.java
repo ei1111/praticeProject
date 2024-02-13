@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.dataResult.MessageToken;
 import notice.pratice.domain.form.LoginForm;
-import notice.pratice.exception.domainException.UserException;
+import notice.pratice.global.error.exception.domainException.UserException;
 import notice.pratice.service.LoginService;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.http.ResponseEntity;

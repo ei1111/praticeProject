@@ -1,4 +1,4 @@
-package notice.pratice.exception.domainException;
+package notice.pratice.global.error.exception.domainException;
 
 import lombok.Getter;
 

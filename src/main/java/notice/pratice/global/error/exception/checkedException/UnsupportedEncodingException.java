@@ -1,4 +1,4 @@
-package notice.pratice.exception.checkedException;
+package notice.pratice.global.error.exception.checkedException;
 
 import lombok.Getter;
 

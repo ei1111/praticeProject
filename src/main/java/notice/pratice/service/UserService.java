@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.UserForm;
 import notice.pratice.entity.User;
-import notice.pratice.exception.domainException.UserException;
+import notice.pratice.global.error.exception.domainException.UserException;
 import notice.pratice.repository.UserRepository;
 import notice.pratice.utils.AesClass;
 import org.springframework.http.HttpStatus;

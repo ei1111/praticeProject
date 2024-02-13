@@ -1,14 +1,13 @@
-package notice.pratice.config;
+package notice.pratice.global.config;
 
 import lombok.extern.slf4j.Slf4j;
 import notice.pratice.domain.UseYn;
 import notice.pratice.entity.UserToken;
-import notice.pratice.exception.domainException.JwtExpiredException;
-import notice.pratice.exception.domainException.LogoutException;
+import notice.pratice.global.error.exception.domainException.JwtExpiredException;
+import notice.pratice.global.error.exception.domainException.LogoutException;
 import notice.pratice.repository.TokenRepository;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;

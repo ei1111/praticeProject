@@ -1,7 +1,7 @@
 package notice.pratice;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import notice.pratice.config.WebConfig;
+import notice.pratice.global.config.WebConfig;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

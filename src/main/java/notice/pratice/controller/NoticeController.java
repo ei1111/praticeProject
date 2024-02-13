@@ -8,14 +8,13 @@ import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.NoticeForm;
 import notice.pratice.domain.pageData.PageModel;
 import notice.pratice.entity.Notice;
-import notice.pratice.exception.domainException.NoticeException;
+import notice.pratice.global.error.exception.domainException.NoticeException;
 import notice.pratice.service.NoticeService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.ArrayList;

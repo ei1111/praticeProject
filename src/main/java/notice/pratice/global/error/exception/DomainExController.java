@@ -21,11 +21,6 @@ public class DomainExController {
         return new ErrorResMessAndCode(noticeException.getMessage(), noticeException.getResultCode());
     }
 
-    @ExceptionHandler(value = LoginException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResMessAndCode loginException(LoginException loginException) {
-        return new ErrorResMessAndCode(loginException.getMessage(), loginException.getResultCode());
-    }
 
     @ExceptionHandler(value = LogoutException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -90,6 +85,13 @@ public class DomainExController {
     @ExceptionHandler(value = { BusinessException.class })
     protected ResponseEntity<ErrorResponse> handleConflict(BusinessException e) {
         log.error("BusinessException", e);
+        ErrorResponse errorResponse = ErrorResponse.of(e.getErrorCode().getErrorCode(), e.getMessage());
+        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(value = { LoginException.class })
+    protected ResponseEntity<ErrorResponse> LoginException(LoginException e) {
         ErrorResponse errorResponse = ErrorResponse.of(e.getErrorCode().getErrorCode(), e.getMessage());
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
                 .body(errorResponse);

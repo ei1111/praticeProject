@@ -1,8 +1,12 @@
 package notice.pratice.global.error.exception.domainException;
 
-public class LoginException extends CommonException {
-
-    public LoginException(String message, String resultCode) {
-        super(message, resultCode);
+import lombok.Getter;
+import notice.pratice.global.error.exception.ErrorCode;
+@Getter
+public class LoginException extends RuntimeException {
+    private ErrorCode errorCode;
+    public LoginException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 }

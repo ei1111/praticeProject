@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Getter
-@ApiModel(value="공지사항 입력 폼",description="제목, 내용, 비고을 가진 DomainClass")
+@ApiModel(value="공지사항 입력 폼",description="제목, 내용, 비고를 가진 DomainClass")
 public class NoticeForm {
     private Integer id;
     @NotEmpty(message = "제목은 필수 값 입니다.")

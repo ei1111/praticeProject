@@ -7,7 +7,9 @@ import notice.pratice.domain.dataResult.MessageToken;
 import notice.pratice.domain.form.LoginForm;
 import notice.pratice.entity.User;
 import notice.pratice.entity.UserToken;
+import notice.pratice.global.error.exception.ErrorCode;
 import notice.pratice.global.error.exception.domainException.LoginException;
+import notice.pratice.global.error.exception.domainException.UserValidException;
 import notice.pratice.repository.TokenRepository;
 import notice.pratice.repository.UserRepository;
 import notice.pratice.utils.AesClass;
@@ -42,7 +44,7 @@ public class LoginService {
             String refreshToekn = tokenService.saveToken(user, request);
             result = MessageToken.createMessage("로그인 완료", "1", HttpStatus.OK, refreshToekn);
         } else {
-            throw new LoginException("존재하지 않는 아이디 입니다", "404");
+            throw new LoginException(ErrorCode.NOT_EXIST_USER);
         }
         return result;
     }

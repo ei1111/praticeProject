@@ -23,7 +23,7 @@ public class JwtUtil {
 
         // payload 부분 설정
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("data", "My First JWT !!");
+        payloads.put("data", "JWT CODE !!");
 
         if (CheckType.isDouble(hour)) {
             double doubleTime = Double.parseDouble(hour);

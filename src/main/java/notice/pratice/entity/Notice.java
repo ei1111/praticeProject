@@ -2,7 +2,6 @@ package notice.pratice.entity;
 
 import lombok.*;
 import notice.pratice.entity.baseEntity.BaseEntity;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

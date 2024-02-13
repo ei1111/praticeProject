@@ -2,11 +2,7 @@ package notice.pratice.global.error.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import notice.pratice.domain.dataResult.ErrorResMessAndCode;
-import notice.pratice.global.error.exception.domainException.NoticeException;
-import notice.pratice.global.error.exception.domainException.JwtExpiredException;
-import notice.pratice.global.error.exception.domainException.LoginException;
-import notice.pratice.global.error.exception.domainException.LogoutException;
-import notice.pratice.global.error.exception.domainException.UserException;
+import notice.pratice.global.error.exception.domainException.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -36,13 +32,19 @@ public class DomainExController {
     public ErrorResMessAndCode logoutException(LogoutException logoutException) {
         return new ErrorResMessAndCode(logoutException.getMessage(), logoutException.getResultCode());
     }
-
-    @ExceptionHandler(value = UserException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResMessAndCode userException(UserException userException) {
-        return new ErrorResMessAndCode(userException.getMessage(), userException.getResultCode());
+    @ExceptionHandler(value = { UserValidException.class })
+    protected ResponseEntity<ErrorResponse> userValidException(UserValidException e) {
+        ErrorResponse errorResponse = ErrorResponse.of(e.getErrorCode().getErrorCode(), e.getMessage());
+        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
+                .body(errorResponse);
     }
 
+    @ExceptionHandler(value = { UserDuplicateException.class })
+    protected ResponseEntity<ErrorResponse> userDuplicateException(UserDuplicateException e) {
+        ErrorResponse errorResponse = ErrorResponse.of(e.getErrorCode().getErrorCode(), e.getMessage());
+        return ResponseEntity.status(e.getErrorCode().getHttpStatus())
+                .body(errorResponse);
+    }
     @ExceptionHandler(value = JwtExpiredException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResMessAndCode jwtExpiredException(JwtExpiredException jwtExpiredException) {

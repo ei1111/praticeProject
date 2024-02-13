@@ -5,12 +5,14 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.dataResult.MessageToken;
 import notice.pratice.domain.form.LoginForm;
-import notice.pratice.global.error.exception.domainException.UserException;
+import notice.pratice.global.error.exception.ErrorCode;
+import notice.pratice.global.error.exception.domainException.UserValidException;
 import notice.pratice.service.LoginService;
 import notice.pratice.utils.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -26,7 +28,7 @@ public class LoginController {
     @ApiResponses({@ApiResponse(code=200,message="조회완료"),@ApiResponse(code=-101,message="가입 폼 누락"),@ApiResponse(code=-103,message="토큰에러") ,@ApiResponse(code=500,message="서버문제발생")})
     public ResponseEntity<MessageToken> login(@RequestBody @Valid  @ApiParam(value="writerId: 사용자 아이디\n" + "writerPwd: 사용자 패스워드" ,required=true) LoginForm loginForm, BindingResult result, HttpServletRequest request) {
         if (result.hasErrors()) {
-            throw new UserException(result.getFieldError().getDefaultMessage(), "-101");
+            throw new UserValidException(ErrorCode.USER_VALID);
         }
         return loginService.login(loginForm, request);
     }

@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.UserForm;
 import notice.pratice.entity.User;
-import notice.pratice.global.error.exception.domainException.UserException;
+import notice.pratice.global.error.exception.ErrorCode;
+import notice.pratice.global.error.exception.domainException.UserValidException;
 import notice.pratice.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,7 +28,7 @@ public class UserController {
     @ApiResponses({@ApiResponse(code=201,message="저장완료"),@ApiResponse(code=-101,message="가입 폼 누락"),@ApiResponse(code=-103,message="토큰에러") ,@ApiResponse(code=500,message="서버문제발생")})
     public ResponseEntity<Message> createUser(@RequestBody  @Valid @ApiParam(value="writerId: 사용자 아이디\n" + "writerPwd: 사용자 패스워드\n" + "writerName: 사용자 이름" ,required=true) UserForm userForm , BindingResult result) {
         if (result.hasErrors()) {
-            throw new UserException(result.getFieldError().getDefaultMessage(), "-101");
+            throw new UserValidException(ErrorCode.USER_VALID);
         }
         return userService.save(userForm);
     }

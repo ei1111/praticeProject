@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import notice.pratice.domain.dataResult.Message;
 import notice.pratice.domain.form.UserForm;
 import notice.pratice.entity.User;
-import notice.pratice.global.error.exception.domainException.UserException;
+import notice.pratice.global.error.exception.ErrorCode;
+import notice.pratice.global.error.exception.domainException.UserDuplicateException;
 import notice.pratice.repository.UserRepository;
 import notice.pratice.utils.AesClass;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,7 @@ public class UserService {
         Integer cnt = userRepository.selectUser(encryptId);
 
         if (cnt > 0) {
-            throw new UserException("중복된 회원이 있습니다", "-101");
+            throw new UserDuplicateException(ErrorCode.USER_DUPLICATE);
         }
     }
 
